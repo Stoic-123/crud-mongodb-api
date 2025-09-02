@@ -1,6 +1,8 @@
 const express = require("express");
 const mongoose = require("mongoose");
+const dotenv = require("dotenv");
 const ProductRouter = require("./routes/product.route");
+dotenv.config();
 const app = express();
 app.use(express.json());
 app.get("/", (req, res) => {
@@ -8,9 +10,7 @@ app.get("/", (req, res) => {
 });
 app.use(ProductRouter);
 mongoose
-  .connect(
-    "mongodb+srv://zealong292_db_user:n1gxDYMO7kveEeux@backenddb.jz2bv00.mongodb.net/Node-API?retryWrites=true&w=majority&appName=BackendDB"
-  )
+  .connect(process.env.MONGODB_URL)
   .then(() => {
     console.log("Connected!");
     app.listen("3000", () => {
